@@ -1,0 +1,44 @@
+package backend.academy.userflow.frontend;
+
+import backend.academy.stream.handlers.PrintHandler;
+import backend.academy.transformations.TransformationType;
+import lombok.Getter;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+@Getter
+public class TransformationsSettings extends BaseSettings {
+    @Getter private static final TransformationsSettings INSTANCE = new TransformationsSettings();
+
+    private final Map<Integer, TransformationType> transformationsBySettings = new LinkedHashMap<>() {{
+        put(1, TransformationType.SINUSOIDAL);
+        put(2, TransformationType.SPHERICAL);
+        put(3, TransformationType.POLAR);
+        put(4, TransformationType.HEART);
+        put(5, TransformationType.DISK);
+    }};
+
+    private TransformationsSettings() {
+        incorrectInput = false;
+    }
+
+    @Override
+    public void print() {
+        StringBuilder text = new StringBuilder(
+            incorrectInput ? "Incorrect input!" + System.lineSeparator() + System.lineSeparator() : "");
+        text.append("Choose transformations:").append(System.lineSeparator());
+
+        int i = 1;
+        for (var transformation : Settings.INSTANCE().transformations().entrySet()) {
+            text.append("  ").append(i).append(". ").append(transformation.getKey().toString())
+                .append(" transformation: ").append(transformation.getValue()).append(System.lineSeparator());
+            ++i;
+        }
+
+        text.append("  ").append(i).append(". Back").append(System.lineSeparator())
+            .append(System.lineSeparator())
+            .append("Input: ");
+
+        PrintHandler.INSTANCE().printMessageLn(text.toString());
+    }
+}
