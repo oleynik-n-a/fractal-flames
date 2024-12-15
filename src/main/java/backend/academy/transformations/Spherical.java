@@ -10,7 +10,7 @@ public final class Spherical implements Transformation {
     }
 
     @Override
-    public TransformationType GetType() {
+    public TransformationType getType() {
         return TransformationType.SPHERICAL;
     }
 }

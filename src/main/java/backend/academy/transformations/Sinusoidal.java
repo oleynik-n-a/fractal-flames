@@ -9,7 +9,7 @@ public final class Sinusoidal implements Transformation {
     }
 
     @Override
-    public TransformationType GetType() {
+    public TransformationType getType() {
         return TransformationType.SINUSOIDAL;
     }
 }

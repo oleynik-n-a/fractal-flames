@@ -11,19 +11,16 @@ public class IterationsAmountSettings extends BaseSettings {
     private final int MIN_ITERATIONS_AMOUNT = 1000;
     private final int MAX_ITERATIONS_AMOUNT = 100000;
 
-    private IterationsAmountSettings() {
-        incorrectInput = false;
-    }
-
     @Override
     public void print() {
-        String text = incorrectInput ? "Incorrect input!" + System.lineSeparator() + System.lineSeparator() : "";
+        super.print();
+        String text = "";
         text += "Input iterations amount >= " + MIN_ITERATIONS_AMOUNT + " && <= " + MAX_ITERATIONS_AMOUNT + " (" +
             Settings.INSTANCE().iterations() + "):" + System.lineSeparator() +
             "  1. Default" + System.lineSeparator() +
             "  2. Back" + System.lineSeparator() +
             System.lineSeparator() +
             "Input: ";
-        PrintHandler.INSTANCE().printMessageLn(text);
+        PrintHandler.INSTANCE().printMessage(text);
     }
 }

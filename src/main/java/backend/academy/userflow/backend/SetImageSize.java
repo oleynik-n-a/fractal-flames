@@ -4,7 +4,7 @@ import backend.academy.stream.handlers.InputHandler;
 import backend.academy.userflow.frontend.ImageSizeSettings;
 import backend.academy.userflow.frontend.Settings;
 
-public final class SetImageSize extends BaseAction<ImageSizeSettings> {
+public final class SetImageSize extends SettingsBasedAction<ImageSizeSettings> {
     public SetImageSize(ImageSizeSettings settings) {
         super(settings);
     }
@@ -16,14 +16,6 @@ public final class SetImageSize extends BaseAction<ImageSizeSettings> {
             settings.print();
             input = InputHandler.INSTANCE().tryReadInteger();
             if (input == null) {
-                settings.incorrectInput(true);
-                continue;
-            }
-            if (settings.step() == 1 && (input < settings.MIN_IMAGE_WIDTH() || input > settings.MAX_IMAGE_WIDTH())) {
-                settings.incorrectInput(true);
-                continue;
-            }
-            if (settings.step() == 2 && (input < settings.MIN_IMAGE_HEIGHT() || input > settings.MAX_IMAGE_HEIGHT())) {
                 settings.incorrectInput(true);
                 continue;
             }
@@ -49,6 +41,15 @@ public final class SetImageSize extends BaseAction<ImageSizeSettings> {
                 settings.incorrectInput(false);
                 return;
             }
+            if (settings.step() == 1 && (input < settings.MIN_IMAGE_WIDTH() || input > settings.MAX_IMAGE_WIDTH())) {
+                settings.incorrectInput(true);
+                continue;
+            }
+            if (settings.step() == 2 && (input < settings.MIN_IMAGE_HEIGHT() || input > settings.MAX_IMAGE_HEIGHT())) {
+                settings.incorrectInput(true);
+                continue;
+            }
+            settings.incorrectInput(false);
             if (settings.step() == 1) {
                 Settings.INSTANCE().image().setWidth(input);
             } else {

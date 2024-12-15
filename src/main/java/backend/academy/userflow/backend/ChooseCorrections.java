@@ -4,7 +4,7 @@ import backend.academy.stream.handlers.InputHandler;
 import backend.academy.userflow.frontend.CorrectionsSettings;
 import backend.academy.userflow.frontend.Settings;
 
-public final class ChooseCorrections extends BaseAction<CorrectionsSettings> {
+public final class ChooseCorrections extends SettingsBasedAction<CorrectionsSettings> {
     public ChooseCorrections(CorrectionsSettings settings) {
         super(settings);
     }
@@ -23,6 +23,7 @@ public final class ChooseCorrections extends BaseAction<CorrectionsSettings> {
                 settings.incorrectInput(false);
                 return;
             }
+            settings.incorrectInput(false);
             if (Settings.INSTANCE().corrections().get(settings.correctionsBySettings().get(input))) {
                 Settings.INSTANCE().corrections().put(settings.correctionsBySettings().get(input), false);
             } else {

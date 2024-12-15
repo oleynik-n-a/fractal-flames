@@ -24,11 +24,17 @@ public class FractalImage {
     public void setWidth(int width) {
         this.width = width;
         this.data = new Pixel[width * height];
+        for (int i = 0; i < this.data.length; i++) {
+            this.data[i] = new Pixel(new Color(0, 0, 0), 0);
+        }
     }
 
     public void setHeight(int height) {
         this.height = height;
         this.data = new Pixel[width * height];
+        for (int i = 0; i < this.data.length; i++) {
+            this.data[i] = new Pixel(new Color(0, 0, 0), 0);
+        }
     }
 
     public Pixel getPixel(int x, int y) {
@@ -41,7 +47,9 @@ public class FractalImage {
         return getPixel(x, y);
     }
 
-    public void setPixel(int x, int y, Pixel pixel) {
-        data[y * width + x] = pixel;
+    public void clearData() {
+        for (int i = 0; i < this.data.length; ++i) {
+            this.data[i] = new Pixel(new Color(0, 0, 0), 0);
+        }
     }
 }

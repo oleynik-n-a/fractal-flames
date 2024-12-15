@@ -11,7 +11,7 @@ public final class Polar implements Transformation {
     }
 
     @Override
-    public TransformationType GetType() {
+    public TransformationType getType() {
         return TransformationType.POLAR;
     }
 }

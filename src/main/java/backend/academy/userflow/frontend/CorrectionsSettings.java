@@ -15,14 +15,10 @@ public class CorrectionsSettings extends BaseSettings {
         put(2, CorrectionType.GAMMA);
     }};
 
-    private CorrectionsSettings() {
-        incorrectInput = false;
-    }
-
     @Override
     public void print() {
-        StringBuilder text = new StringBuilder(
-            incorrectInput ? "Incorrect input!" + System.lineSeparator() + System.lineSeparator() : "");
+        super.print();
+        StringBuilder text = new StringBuilder();
         text.append("Choose corrections:").append(System.lineSeparator());
 
         int i = 1;
@@ -36,6 +32,6 @@ public class CorrectionsSettings extends BaseSettings {
             .append(System.lineSeparator())
             .append("Input: ");
 
-        PrintHandler.INSTANCE().printMessageLn(text.toString());
+        PrintHandler.INSTANCE().printMessage(text.toString());
     }
 }

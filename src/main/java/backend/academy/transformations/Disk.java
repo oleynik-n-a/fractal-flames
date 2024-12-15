@@ -11,7 +11,7 @@ public final class Disk implements Transformation {
     }
 
     @Override
-    public TransformationType GetType() {
+    public TransformationType getType() {
         return TransformationType.DISK;
     }
 }

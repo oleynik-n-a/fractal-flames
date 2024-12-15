@@ -22,4 +22,16 @@ public final class InputHandler {
             return null;
         }
     }
+
+    public Long tryReadLong() {
+        try {
+            return Long.parseLong(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    public String readString() {
+        return scanner.nextLine();
+    }
 }

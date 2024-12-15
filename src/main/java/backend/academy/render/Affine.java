@@ -1,25 +1,40 @@
 package backend.academy.render;
 
+import backend.academy.models.Color;
 import backend.academy.models.Point;
+import lombok.Getter;
 import java.security.SecureRandom;
 import java.util.function.Function;
 
 public final class Affine implements Function<Point, Point> {
-    private final double a;
-    private final double b;
-    private final double c;
-    private final double d;
-    private final double e;
-    private final double f;
+    @Getter private final Color color;
+    private double a;
+    private double b;
+    private double c;
+    private double d;
+    private double e;
+    private double f;
 
     public Affine() {
         SecureRandom random = new SecureRandom();
-        a = random.nextDouble();
-        b = random.nextDouble();
-        c = random.nextDouble();
-        d = random.nextDouble();
-        e = random.nextDouble();
-        f = random.nextDouble();
+        color = new Color(random.nextInt(Color.COLOR_SPECTRE), random.nextInt(Color.COLOR_SPECTRE),
+            random.nextInt(Color.COLOR_SPECTRE));
+        do {
+            a = random.nextDouble(-1.0, 1.0);
+            b = random.nextDouble(-1.0, 1.0);
+            c = random.nextDouble(-1.0, 1.0);
+            d = random.nextDouble(-1.0, 1.0);
+            e = random.nextDouble(-1.0, 1.0);
+            f = random.nextDouble(-1.0, 1.0);
+        } while (!checkAffine());
+    }
+
+    private boolean checkAffine() {
+        boolean result = true;
+        result &= (Math.pow(a, 2) + Math.pow(d, 2) < 1);
+        result &= (Math.pow(b, 2) + Math.pow(e, 2) < 1);
+        result &= (Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(d, 2) + Math.pow(e, 2) < 1 + Math.pow(a * e - b * d, 2));
+        return result;
     }
 
     @Override

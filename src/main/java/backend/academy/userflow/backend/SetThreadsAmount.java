@@ -4,7 +4,7 @@ import backend.academy.stream.handlers.InputHandler;
 import backend.academy.userflow.frontend.Settings;
 import backend.academy.userflow.frontend.ThreadsAmountSettings;
 
-public final class SetThreadsAmount extends BaseAction<ThreadsAmountSettings> {
+public final class SetThreadsAmount extends SettingsBasedAction<ThreadsAmountSettings> {
     public SetThreadsAmount(ThreadsAmountSettings settings) {
         super(settings);
     }
@@ -15,7 +15,7 @@ public final class SetThreadsAmount extends BaseAction<ThreadsAmountSettings> {
         while (true) {
             settings.print();
             input = InputHandler.INSTANCE().tryReadInteger();
-            if (input == null || input < settings.MIN_THREADS_AMOUNT() || settings.MAX_THREADS_AMOUNT() < input) {
+            if (input == null) {
                 settings.incorrectInput(true);
                 continue;
             }
@@ -28,6 +28,11 @@ public final class SetThreadsAmount extends BaseAction<ThreadsAmountSettings> {
                 settings.incorrectInput(false);
                 return;
             }
+            if (input < settings.MIN_THREADS_AMOUNT() || input > settings.MAX_THREADS_AMOUNT()) {
+                settings.incorrectInput(true);
+                continue;
+            }
+            settings.incorrectInput(false);
             Settings.INSTANCE().threads(input);
         }
     }

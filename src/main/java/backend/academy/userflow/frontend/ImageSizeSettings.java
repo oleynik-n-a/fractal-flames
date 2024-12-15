@@ -16,13 +16,14 @@ public class ImageSizeSettings extends BaseSettings {
     private int step;
 
     private ImageSizeSettings() {
-        incorrectInput = false;
+        super();
         step = 1;
     }
 
     @Override
     public void print() {
-        String text = incorrectInput ? "Incorrect input!" + System.lineSeparator() + System.lineSeparator() : "";
+        super.print();
+        String text = "";
         if (step == 1) {
             text += "Input image width >= " + MIN_IMAGE_WIDTH + " && <= " + MAX_IMAGE_WIDTH + " (" +
                 Settings.INSTANCE().image().width();
@@ -36,6 +37,6 @@ public class ImageSizeSettings extends BaseSettings {
             "  3. Back" + System.lineSeparator() +
             System.lineSeparator() +
             "Input: ";
-        PrintHandler.INSTANCE().printMessageLn(text);
+        PrintHandler.INSTANCE().printMessage(text);
     }
 }

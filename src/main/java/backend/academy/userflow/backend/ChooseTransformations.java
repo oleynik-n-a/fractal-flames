@@ -4,7 +4,7 @@ import backend.academy.stream.handlers.InputHandler;
 import backend.academy.userflow.frontend.Settings;
 import backend.academy.userflow.frontend.TransformationsSettings;
 
-public final class ChooseTransformations extends BaseAction<TransformationsSettings> {
+public final class ChooseTransformations extends SettingsBasedAction<TransformationsSettings> {
     public ChooseTransformations(TransformationsSettings settings) {
         super(settings);
     }
