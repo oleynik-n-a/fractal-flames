@@ -10,6 +10,7 @@ public final class SetImageSize extends SettingsBasedAction<ImageSizeSettings> {
     }
 
     @Override
+    @SuppressWarnings({"returncount", "magicnumber"})
     public void act() {
         Integer input;
         while (true) {
@@ -22,9 +23,9 @@ public final class SetImageSize extends SettingsBasedAction<ImageSizeSettings> {
             if (input == 1) {
                 settings.incorrectInput(false);
                 if (settings.step() == 1) {
-                    Settings.INSTANCE.image().setWidth(Settings.INSTANCE.BASE_IMAGE_WIDTH());
+                    Settings.INSTANCE.image().setWidth(Settings.INSTANCE.baseImageWidth());
                 } else {
-                    Settings.INSTANCE.image().setHeight(Settings.INSTANCE.BASE_IMAGE_HEIGHT());
+                    Settings.INSTANCE.image().setHeight(Settings.INSTANCE.baseImageHeight());
                 }
                 return;
             }
@@ -41,11 +42,11 @@ public final class SetImageSize extends SettingsBasedAction<ImageSizeSettings> {
                 settings.incorrectInput(false);
                 return;
             }
-            if (settings.step() == 1 && (input < settings.MIN_IMAGE_WIDTH() || input > settings.MAX_IMAGE_WIDTH())) {
+            if (settings.step() == 1 && (input < settings.minImageWidth() || input > settings.maxImageWidth())) {
                 settings.incorrectInput(true);
                 continue;
             }
-            if (settings.step() == 2 && (input < settings.MIN_IMAGE_HEIGHT() || input > settings.MAX_IMAGE_HEIGHT())) {
+            if (settings.step() == 2 && (input < settings.minImageHeight() || input > settings.maxImageHeight())) {
                 settings.incorrectInput(true);
                 continue;
             }

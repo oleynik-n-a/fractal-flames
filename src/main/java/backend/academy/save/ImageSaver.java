@@ -1,11 +1,11 @@
 package backend.academy.save;
 
 import backend.academy.models.FractalImage;
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import javax.imageio.ImageIO;
 
 public final class ImageSaver {
     public static final ImageSaver INSTANCE = new ImageSaver();

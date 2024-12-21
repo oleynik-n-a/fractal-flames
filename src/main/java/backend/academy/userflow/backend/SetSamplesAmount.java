@@ -10,6 +10,7 @@ public final class SetSamplesAmount extends SettingsBasedAction<SamplesAmountSet
     }
 
     @Override
+    @SuppressWarnings("returncount")
     public void act() {
         Integer input;
         while (true) {
@@ -21,14 +22,14 @@ public final class SetSamplesAmount extends SettingsBasedAction<SamplesAmountSet
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE.samples(Settings.INSTANCE.BASE_SAMPLES_AMOUNT());
+                Settings.INSTANCE.samples(Settings.INSTANCE.baseSamplesAmount());
                 return;
             }
             if (input == 2) {
                 settings.incorrectInput(false);
                 return;
             }
-            if (input < settings.MIN_SAMPLES_AMOUNT() || input > settings.MAX_SAMPLES_AMOUNT()) {
+            if (input < settings.minSamplesAmount() || input > settings.maxSamplesAmount()) {
                 settings.incorrectInput(true);
                 continue;
             }

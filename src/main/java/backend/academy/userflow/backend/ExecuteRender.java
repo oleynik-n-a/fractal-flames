@@ -1,6 +1,7 @@
 package backend.academy.userflow.backend;
 
 import backend.academy.models.Rect;
+import backend.academy.postprocess.GammaCorrection;
 import backend.academy.render.Affine;
 import backend.academy.render.MultiThreadRenderer;
 import backend.academy.render.RenderException;
@@ -24,6 +25,8 @@ import java.util.Random;
 import static backend.academy.save.ImageSaver.SEPARATOR;
 
 public final class ExecuteRender implements Action {
+    private static final double WORLD_SIZE_SIDE = 24.0;
+
     private static final Map<TransformationType, Transformation> TRANSFORMATION_BY_TYPE = Map.of(
         TransformationType.SINUSOIDAL, new Sinusoidal(),
         TransformationType.SPHERICAL, new Spherical(),
@@ -53,8 +56,8 @@ public final class ExecuteRender implements Action {
             renderer = new SingleThreadRenderer(transformations, useGammaCorrection);
         }
 
-        double width = 24.0;
-        double height = 24.0;
+        double width = WORLD_SIZE_SIDE;
+        double height = WORLD_SIZE_SIDE;
         Rect world = new Rect(-width / 2, -height / 2, width, height);
 
         Random random = new Random(Settings.INSTANCE.seed());
@@ -68,6 +71,11 @@ public final class ExecuteRender implements Action {
 
             renderer.render(Settings.INSTANCE.image(), world, affines, Settings.INSTANCE.samples(),
                 Settings.INSTANCE.iterations(), Settings.INSTANCE.seed());
+
+            if (useGammaCorrection) {
+                GammaCorrection correction = new GammaCorrection();
+                correction.process(Settings.INSTANCE.image());
+            }
 
             PrintHandler.INSTANCE.printMessageLn("Rendering finished");
             PrintHandler.INSTANCE.printMessageLn(

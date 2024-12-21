@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import static backend.academy.save.ImageSaver.SEPARATOR;
 
 public final class SetFilePath extends SettingsBasedAction<FilePathSettings> {
-    private static int file_number = 1;
+    private static int fileNumber = 1;
 
     public SetFilePath(FilePathSettings settings) {
         super(settings);
@@ -29,10 +29,10 @@ public final class SetFilePath extends SettingsBasedAction<FilePathSettings> {
                 while (true) {
                     try {
                         Settings.INSTANCE
-                            .path(Paths.get("results" + SEPARATOR + "Unnamed_" + file_number).toString());
+                            .path(Paths.get("results" + SEPARATOR + "Unnamed_" + fileNumber).toString());
                         break;
                     } catch (InvalidPathException e) {
-                        ++file_number;
+                        ++fileNumber;
                     }
                 }
                 continue;

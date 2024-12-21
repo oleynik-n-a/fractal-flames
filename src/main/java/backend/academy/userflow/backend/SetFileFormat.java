@@ -11,6 +11,7 @@ public final class SetFileFormat extends SettingsBasedAction<FileFormatSettings>
     }
 
     @Override
+    @SuppressWarnings("magicnumber")
     public void act() {
         Integer input;
         while (true) {

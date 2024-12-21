@@ -2,14 +2,15 @@ package backend.academy.userflow.frontend;
 
 import backend.academy.stream.handlers.PrintHandler;
 import backend.academy.transformations.TransformationType;
-import lombok.Getter;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import lombok.Getter;
 
 @Getter
-public class TransformationsSettings extends BaseSettings {
+public final class TransformationsSettings extends BaseSettings {
     public static final TransformationsSettings INSTANCE = new TransformationsSettings();
 
+    @SuppressWarnings("magicnumber")
     private final Map<Integer, TransformationType> transformationsBySettings = new LinkedHashMap<>() {{
         put(1, TransformationType.SINUSOIDAL);
         put(2, TransformationType.SPHERICAL);

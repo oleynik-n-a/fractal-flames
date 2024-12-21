@@ -2,7 +2,7 @@ package backend.academy.userflow.backend;
 
 import backend.academy.stream.handlers.InputHandler;
 import backend.academy.userflow.frontend.AffinesAmountSettings;
-import backend.academy.userflow.frontend.DummySetting;
+import backend.academy.userflow.frontend.DummySettings;
 import backend.academy.userflow.frontend.FileFormatSettings;
 import backend.academy.userflow.frontend.FilePathSettings;
 import backend.academy.userflow.frontend.ImageSizeSettings;
@@ -18,6 +18,7 @@ import java.util.Map;
 public final class ChangeSettings extends SettingsBasedAction<Settings> {
     private final Map<Integer, Action> actions;
 
+    @SuppressWarnings("magicnumber")
     public ChangeSettings(Settings settings) {
         super(settings);
         actions = new HashMap<>() {{
@@ -30,7 +31,7 @@ public final class ChangeSettings extends SettingsBasedAction<Settings> {
             put(7, new SetAffinesAmount(AffinesAmountSettings.INSTANCE));
             put(8, new SetImageSize(ImageSizeSettings.INSTANCE));
             put(9, new SetSeed(SeedSettings.INSTANCE));
-            put(10, new SwitchCorrection(DummySetting.INSTANCE));
+            put(10, new SwitchCorrection(DummySettings.INSTANCE));
             put(11, new ChooseTransformations(TransformationsSettings.INSTANCE));
             put(12, new Exit());
         }};

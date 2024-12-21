@@ -10,6 +10,7 @@ public final class SetIterationsAmount extends SettingsBasedAction<IterationsAmo
     }
 
     @Override
+    @SuppressWarnings("returncount")
     public void act() {
         Integer input;
         while (true) {
@@ -21,14 +22,14 @@ public final class SetIterationsAmount extends SettingsBasedAction<IterationsAmo
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE.iterations(Settings.INSTANCE.BASE_ITERATIONS_AMOUNT());
+                Settings.INSTANCE.iterations(Settings.INSTANCE.baseIterationsAmount());
                 return;
             }
             if (input == 2) {
                 settings.incorrectInput(false);
                 return;
             }
-            if (input < settings.MIN_ITERATIONS_AMOUNT() || input > settings.MAX_ITERATIONS_AMOUNT()) {
+            if (input < settings.minIterationsAmount() || input > settings.maxIterationsAmount()) {
                 settings.incorrectInput(true);
                 continue;
             }

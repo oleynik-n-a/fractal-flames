@@ -10,6 +10,7 @@ public final class SetAffinesAmount extends SettingsBasedAction<AffinesAmountSet
     }
 
     @Override
+    @SuppressWarnings("returncount")
     public void act() {
         Integer input;
         while (true) {
@@ -21,14 +22,14 @@ public final class SetAffinesAmount extends SettingsBasedAction<AffinesAmountSet
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE.affines(Settings.INSTANCE.BASE_AFFINES_AMOUNT());
+                Settings.INSTANCE.affines(Settings.INSTANCE.baseAffinesAmount());
                 return;
             }
             if (input == 2) {
                 settings.incorrectInput(false);
                 return;
             }
-            if (input < settings.MIN_AFFINES_AMOUNT() || input > settings.MAX_AFFINES_AMOUNT()) {
+            if (input < settings.minAffinesAmount() || input > settings.maxAffinesAmount()) {
                 settings.incorrectInput(true);
                 continue;
             }

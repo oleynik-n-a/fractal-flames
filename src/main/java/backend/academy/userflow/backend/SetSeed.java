@@ -11,6 +11,7 @@ public final class SetSeed extends SettingsBasedAction<SeedSettings> {
     }
 
     @Override
+    @SuppressWarnings({"returncount", "magicnumber"})
     public void act() {
         Long input;
         while (true) {
@@ -22,7 +23,7 @@ public final class SetSeed extends SettingsBasedAction<SeedSettings> {
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE.seed(Settings.INSTANCE.BASE_SEED());
+                Settings.INSTANCE.seed(Settings.INSTANCE.baseSeed());
                 return;
             }
             if (input == 2) {

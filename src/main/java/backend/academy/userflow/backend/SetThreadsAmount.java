@@ -10,6 +10,7 @@ public final class SetThreadsAmount extends SettingsBasedAction<ThreadsAmountSet
     }
 
     @Override
+    @SuppressWarnings("returncount")
     public void act() {
         Integer input;
         while (true) {
@@ -21,14 +22,14 @@ public final class SetThreadsAmount extends SettingsBasedAction<ThreadsAmountSet
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE.threads(Settings.INSTANCE.BASE_THREADS_AMOUNT());
+                Settings.INSTANCE.threads(Settings.INSTANCE.baseThreadsAmount());
                 return;
             }
             if (input == 2) {
                 settings.incorrectInput(false);
                 return;
             }
-            if (input < settings.MIN_THREADS_AMOUNT() || input > settings.MAX_THREADS_AMOUNT()) {
+            if (input < settings.minThreadsAmount() || input > settings.maxThreadsAmount()) {
                 settings.incorrectInput(true);
                 continue;
             }

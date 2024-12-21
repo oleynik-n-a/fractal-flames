@@ -1,9 +1,9 @@
 package backend.academy.userflow.backend;
 
-public abstract class SettingsBasedAction<SettingsType> implements Action {
-    protected SettingsType settings;
+public abstract class SettingsBasedAction<T> implements Action {
+    protected T settings;
 
-    public SettingsBasedAction(SettingsType settings) {
+    public SettingsBasedAction(T settings) {
         this.settings = settings;
     }
 }
