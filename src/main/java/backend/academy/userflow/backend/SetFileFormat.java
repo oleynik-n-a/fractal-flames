@@ -15,19 +15,19 @@ public final class SetFileFormat extends SettingsBasedAction<FileFormatSettings>
         Integer input;
         while (true) {
             settings.print();
-            input = InputHandler.INSTANCE().tryReadInteger();
+            input = InputHandler.INSTANCE.tryReadInteger();
             if (input == null) {
                 settings.incorrectInput(true);
                 continue;
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE().format(ImageFormat.PNG);
+                Settings.INSTANCE.format(ImageFormat.PNG);
                 continue;
             }
             if (input == 2) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE().format(ImageFormat.JPEG);
+                Settings.INSTANCE.format(ImageFormat.JPEG);
                 continue;
             }
             if (input == 3) {

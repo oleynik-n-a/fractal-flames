@@ -14,7 +14,7 @@ public final class SetImageSize extends SettingsBasedAction<ImageSizeSettings> {
         Integer input;
         while (true) {
             settings.print();
-            input = InputHandler.INSTANCE().tryReadInteger();
+            input = InputHandler.INSTANCE.tryReadInteger();
             if (input == null) {
                 settings.incorrectInput(true);
                 continue;
@@ -22,9 +22,9 @@ public final class SetImageSize extends SettingsBasedAction<ImageSizeSettings> {
             if (input == 1) {
                 settings.incorrectInput(false);
                 if (settings.step() == 1) {
-                    Settings.INSTANCE().image().setWidth(Settings.INSTANCE().BASE_IMAGE_WIDTH());
+                    Settings.INSTANCE.image().setWidth(Settings.INSTANCE.BASE_IMAGE_WIDTH());
                 } else {
-                    Settings.INSTANCE().image().setHeight(Settings.INSTANCE().BASE_IMAGE_HEIGHT());
+                    Settings.INSTANCE.image().setHeight(Settings.INSTANCE.BASE_IMAGE_HEIGHT());
                 }
                 return;
             }
@@ -51,9 +51,9 @@ public final class SetImageSize extends SettingsBasedAction<ImageSizeSettings> {
             }
             settings.incorrectInput(false);
             if (settings.step() == 1) {
-                Settings.INSTANCE().image().setWidth(input);
+                Settings.INSTANCE.image().setWidth(input);
             } else {
-                Settings.INSTANCE().image().setHeight(input);
+                Settings.INSTANCE.image().setHeight(input);
             }
         }
     }

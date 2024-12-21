@@ -2,10 +2,9 @@ package backend.academy.stream.handlers;
 
 import java.io.InputStream;
 import java.util.Scanner;
-import lombok.Getter;
 
 public final class InputHandler {
-    @Getter private static final InputHandler INSTANCE = new InputHandler();
+    public static final InputHandler INSTANCE = new InputHandler();
     private static Scanner scanner;
 
     private InputHandler() {

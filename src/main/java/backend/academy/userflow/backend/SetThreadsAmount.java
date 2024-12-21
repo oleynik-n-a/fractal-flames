@@ -14,14 +14,14 @@ public final class SetThreadsAmount extends SettingsBasedAction<ThreadsAmountSet
         Integer input;
         while (true) {
             settings.print();
-            input = InputHandler.INSTANCE().tryReadInteger();
+            input = InputHandler.INSTANCE.tryReadInteger();
             if (input == null) {
                 settings.incorrectInput(true);
                 continue;
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE().threads(Settings.INSTANCE().BASE_THREADS_AMOUNT());
+                Settings.INSTANCE.threads(Settings.INSTANCE.BASE_THREADS_AMOUNT());
                 return;
             }
             if (input == 2) {
@@ -33,7 +33,7 @@ public final class SetThreadsAmount extends SettingsBasedAction<ThreadsAmountSet
                 continue;
             }
             settings.incorrectInput(false);
-            Settings.INSTANCE().threads(input);
+            Settings.INSTANCE.threads(input);
         }
     }
 }

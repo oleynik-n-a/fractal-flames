@@ -2,9 +2,9 @@ package backend.academy.render;
 
 import backend.academy.models.Color;
 import backend.academy.models.Point;
-import lombok.Getter;
-import java.security.SecureRandom;
+import java.util.Random;
 import java.util.function.Function;
+import lombok.Getter;
 
 public final class Affine implements Function<Point, Point> {
     @Getter private final Color color;
@@ -15,8 +15,7 @@ public final class Affine implements Function<Point, Point> {
     private double e;
     private double f;
 
-    public Affine() {
-        SecureRandom random = new SecureRandom();
+    public Affine(Random random) {
         color = new Color(random.nextInt(Color.COLOR_SPECTRE), random.nextInt(Color.COLOR_SPECTRE),
             random.nextInt(Color.COLOR_SPECTRE));
         do {

@@ -1,10 +1,9 @@
 package backend.academy.stream.handlers;
 
 import java.io.PrintStream;
-import lombok.Getter;
 
 public final class PrintHandler {
-    @Getter private static final PrintHandler INSTANCE = new PrintHandler();
+    public static final PrintHandler INSTANCE = new PrintHandler();
     private static PrintStream printStream;
 
     private PrintHandler() {

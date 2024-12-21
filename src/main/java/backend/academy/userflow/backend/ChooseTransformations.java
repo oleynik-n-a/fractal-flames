@@ -14,19 +14,19 @@ public final class ChooseTransformations extends SettingsBasedAction<Transformat
         Integer input;
         while (true) {
             settings.print();
-            input = InputHandler.INSTANCE().tryReadInteger();
-            if (input == null || input < 1 || input > Settings.INSTANCE().transformations().size() + 1) {
+            input = InputHandler.INSTANCE.tryReadInteger();
+            if (input == null || input < 1 || input > Settings.INSTANCE.transformations().size() + 1) {
                 settings.incorrectInput(true);
                 continue;
             }
-            if (input == Settings.INSTANCE().transformations().size() + 1) {
+            if (input == Settings.INSTANCE.transformations().size() + 1) {
                 settings.incorrectInput(false);
                 return;
             }
-            if (Settings.INSTANCE().transformations().get(settings.transformationsBySettings().get(input))) {
-                Settings.INSTANCE().transformations().put(settings.transformationsBySettings().get(input), false);
+            if (Settings.INSTANCE.transformations().get(settings.transformationsBySettings().get(input))) {
+                Settings.INSTANCE.transformations().put(settings.transformationsBySettings().get(input), false);
             } else {
-                Settings.INSTANCE().transformations().put(settings.transformationsBySettings().get(input), true);
+                Settings.INSTANCE.transformations().put(settings.transformationsBySettings().get(input), true);
             }
         }
     }

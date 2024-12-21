@@ -14,14 +14,14 @@ public final class SetAffinesAmount extends SettingsBasedAction<AffinesAmountSet
         Integer input;
         while (true) {
             settings.print();
-            input = InputHandler.INSTANCE().tryReadInteger();
+            input = InputHandler.INSTANCE.tryReadInteger();
             if (input == null) {
                 settings.incorrectInput(true);
                 continue;
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE().affines(Settings.INSTANCE().BASE_AFFINES_AMOUNT());
+                Settings.INSTANCE.affines(Settings.INSTANCE.BASE_AFFINES_AMOUNT());
                 return;
             }
             if (input == 2) {
@@ -33,7 +33,7 @@ public final class SetAffinesAmount extends SettingsBasedAction<AffinesAmountSet
                 continue;
             }
             settings.incorrectInput(false);
-            Settings.INSTANCE().affines(input);
+            Settings.INSTANCE.affines(input);
         }
     }
 }

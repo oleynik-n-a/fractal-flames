@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class SamplesAmountSettings extends BaseSettings {
-    @Getter private static final SamplesAmountSettings INSTANCE = new SamplesAmountSettings();
+    public static final SamplesAmountSettings INSTANCE = new SamplesAmountSettings();
 
     private final int MIN_SAMPLES_AMOUNT = 1000;
     private final int MAX_SAMPLES_AMOUNT = 100000;
@@ -16,11 +16,11 @@ public class SamplesAmountSettings extends BaseSettings {
         super.print();
         String text = "";
         text += "Input samples amount >= " + MIN_SAMPLES_AMOUNT + " && <= " + MAX_SAMPLES_AMOUNT + " (" +
-            Settings.INSTANCE().samples() + "):" + System.lineSeparator() +
+            Settings.INSTANCE.samples() + "):" + System.lineSeparator() +
             "  1. Default" + System.lineSeparator() +
             "  2. Back" + System.lineSeparator() +
             System.lineSeparator() +
             "Input: ";
-        PrintHandler.INSTANCE().printMessage(text);
+        PrintHandler.INSTANCE.printMessage(text);
     }
 }

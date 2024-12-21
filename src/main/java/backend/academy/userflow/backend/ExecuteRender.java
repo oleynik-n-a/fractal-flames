@@ -1,10 +1,6 @@
 package backend.academy.userflow.backend;
 
 import backend.academy.models.Rect;
-import backend.academy.postprocess.Correction;
-import backend.academy.postprocess.CorrectionType;
-import backend.academy.postprocess.GammaCorrection;
-import backend.academy.postprocess.LogarithmicCorrection;
 import backend.academy.render.Affine;
 import backend.academy.render.MultiThreadRenderer;
 import backend.academy.render.RenderException;
@@ -24,6 +20,7 @@ import backend.academy.userflow.frontend.Settings;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 import static backend.academy.save.ImageSaver.SEPARATOR;
 
 public final class ExecuteRender implements Action {
@@ -35,62 +32,56 @@ public final class ExecuteRender implements Action {
         TransformationType.DISK, new Disk()
     );
 
-    private static final Map<CorrectionType, Correction> CORRECTION_BY_TYPE = Map.of(
-        CorrectionType.LOGARITHMIC, new LogarithmicCorrection(),
-        CorrectionType.GAMMA, new GammaCorrection()
-    );
-
     @Override
     public void act() {
         Renderer renderer;
 
-        var chosenTransformations = Settings.INSTANCE().transformations();
-        var chosenCorrections = Settings.INSTANCE().corrections();
+        var chosenTransformations = Settings.INSTANCE.transformations();
 
         ArrayList<Transformation> transformations = new ArrayList<>();
-        ArrayList<Correction> corrections = new ArrayList<>();
+        boolean useGammaCorrection = Settings.INSTANCE.correction();
 
         for (var transformationType : chosenTransformations.keySet()) {
             if (chosenTransformations.get(transformationType)) {
                 transformations.add(TRANSFORMATION_BY_TYPE.get(transformationType));
             }
         }
-        for (var correctionType : chosenCorrections.keySet()) {
-            if (chosenCorrections.get(correctionType)) {
-                corrections.add(CORRECTION_BY_TYPE.get(correctionType));
-            }
-        }
 
-        if (Settings.INSTANCE().threads() > 1) {
-            renderer = new MultiThreadRenderer(transformations, corrections, Settings.INSTANCE().threads());
+        if (Settings.INSTANCE.threads() > 1) {
+            renderer = new MultiThreadRenderer(transformations, useGammaCorrection, Settings.INSTANCE.threads());
         } else {
-            renderer = new SingleThreadRenderer(transformations, corrections);
+            renderer = new SingleThreadRenderer(transformations, useGammaCorrection);
         }
 
-        double width = 1.0;
-        double height = 1.0;
+        double width = 24.0;
+        double height = 24.0;
         Rect world = new Rect(-width / 2, -height / 2, width, height);
 
-        ArrayList<Affine> affines = new ArrayList<>(Settings.INSTANCE().affines());
-        for (int i = 0; i < Settings.INSTANCE().affines(); ++i) {
-            affines.add(new Affine());
+        Random random = new Random(Settings.INSTANCE.seed());
+        ArrayList<Affine> affines = new ArrayList<>(Settings.INSTANCE.affines());
+        for (int i = 0; i < Settings.INSTANCE.affines(); ++i) {
+            affines.add(new Affine(random));
         }
 
         try {
-            PrintHandler.INSTANCE().printMessageLn("Rendering started on seed: " + Settings.INSTANCE().seed());
-            renderer.render(Settings.INSTANCE().image(), world, affines, Settings.INSTANCE().samples(),
-                Settings.INSTANCE().iterations(), Settings.INSTANCE().seed());
-            PrintHandler.INSTANCE().printMessageLn("Rendering finished");
-            PrintHandler.INSTANCE().printMessageLn(
-                "Saving to: " + Settings.INSTANCE().path() + "." + Settings.INSTANCE().format());
-            ImageSaver.INSTANCE.save(Settings.INSTANCE().image(),
-                new File("results" + SEPARATOR + Settings.INSTANCE().path() + "." + Settings.INSTANCE().format()),
-                Settings.INSTANCE().format());
-            PrintHandler.INSTANCE().printMessageLn("Saving finished");
+            PrintHandler.INSTANCE.printMessageLn("Rendering started on seed: " + Settings.INSTANCE.seed());
+
+            renderer.render(Settings.INSTANCE.image(), world, affines, Settings.INSTANCE.samples(),
+                Settings.INSTANCE.iterations(), Settings.INSTANCE.seed());
+
+            PrintHandler.INSTANCE.printMessageLn("Rendering finished");
+            PrintHandler.INSTANCE.printMessageLn(
+                "Saving to: " + Settings.INSTANCE.path() + "." + Settings.INSTANCE.format());
+
+            ImageSaver.INSTANCE.save(Settings.INSTANCE.image(),
+                new File("results" + SEPARATOR + Settings.INSTANCE.path() + "." + Settings.INSTANCE.format()),
+                Settings.INSTANCE.format());
+
+            PrintHandler.INSTANCE.printMessageLn("Saving finished");
         } catch (RenderException | SaveException e) {
-            PrintHandler.INSTANCE().printMessageLn(e.getMessage());
+            PrintHandler.INSTANCE.printMessageLn(e.getMessage());
         }
 
-        Settings.INSTANCE().image().clearData();
+        Settings.INSTANCE.image().clearData();
     }
 }

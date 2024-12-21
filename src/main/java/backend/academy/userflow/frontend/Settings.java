@@ -1,7 +1,6 @@
 package backend.academy.userflow.frontend;
 
 import backend.academy.models.FractalImage;
-import backend.academy.postprocess.CorrectionType;
 import backend.academy.save.ImageFormat;
 import backend.academy.stream.handlers.PrintHandler;
 import backend.academy.transformations.TransformationType;
@@ -13,17 +12,18 @@ import static backend.academy.save.ImageSaver.SEPARATOR;
 
 @Getter
 public class Settings extends BaseSettings {
-    @Getter private static final Settings INSTANCE = new Settings();
+    public static final Settings INSTANCE = new Settings();
 
     private final String BASE_FILE_PATH = "results" + SEPARATOR + "base_file_path";
     private final ImageFormat BASE_IMAGE_FORMAT = ImageFormat.PNG;
-    private final int BASE_THREADS_AMOUNT = 1;
-    private final int BASE_ITERATIONS_AMOUNT = 1000;
-    private final int BASE_SAMPLES_AMOUNT = 10000;
-    private final int BASE_AFFINES_AMOUNT = 10;
-    private final int BASE_IMAGE_WIDTH = 640;
-    private final int BASE_IMAGE_HEIGHT = 640;
+    private final int BASE_THREADS_AMOUNT = 20;
+    private final int BASE_ITERATIONS_AMOUNT = 4000;
+    private final int BASE_SAMPLES_AMOUNT = 20000;
+    private final int BASE_AFFINES_AMOUNT = 5;
+    private final int BASE_IMAGE_WIDTH = 1024;
+    private final int BASE_IMAGE_HEIGHT = 1024;
     private final long BASE_SEED = 2024L;
+    private final boolean BASE_CORRECTION = true;
 
     @Setter private String path;
     @Setter private ImageFormat format;
@@ -32,9 +32,9 @@ public class Settings extends BaseSettings {
     @Setter private int samples;
     @Setter private int affines;
     @Setter private Long seed;
+    @Setter private boolean correction;
     private final FractalImage image;
     private final Map<TransformationType, Boolean> transformations;
-    private final Map<CorrectionType, Boolean> corrections;
 
     private Settings() {
         super();
@@ -45,6 +45,7 @@ public class Settings extends BaseSettings {
         samples = BASE_SAMPLES_AMOUNT;
         affines = BASE_AFFINES_AMOUNT;
         seed = BASE_SEED;
+        correction = BASE_CORRECTION;
         image = new FractalImage(BASE_IMAGE_WIDTH, BASE_IMAGE_HEIGHT);
         transformations = new LinkedHashMap<>() {{
             put(TransformationType.SINUSOIDAL, false);
@@ -52,10 +53,6 @@ public class Settings extends BaseSettings {
             put(TransformationType.POLAR, false);
             put(TransformationType.HEART, false);
             put(TransformationType.DISK, false);
-        }};
-        corrections = new LinkedHashMap<>() {{
-            put(CorrectionType.LOGARITHMIC, false);
-            put(CorrectionType.GAMMA, false);
         }};
     }
 
@@ -72,11 +69,12 @@ public class Settings extends BaseSettings {
             "  7. Set affines amount (" + affines + ")" + System.lineSeparator() +
             "  8. Set image size (" + image.width() + "x" + image.height() + ")" + System.lineSeparator() +
             "  9. Set seed (" + seed + ")" + System.lineSeparator() +
-            "  10. Choose transformations" + System.lineSeparator() +
-            "  11. Choose corrections" + System.lineSeparator() +
+            "  10. " + (correction ? "Disable" : "Enable") + " gamma correction (" + correction + ")" +
+            System.lineSeparator() +
+            "  11. Choose transformations" + System.lineSeparator() +
             "  12. Exit" + System.lineSeparator() +
             System.lineSeparator() +
             "Input: ";
-        PrintHandler.INSTANCE().printMessage(text);
+        PrintHandler.INSTANCE.printMessage(text);
     }
 }

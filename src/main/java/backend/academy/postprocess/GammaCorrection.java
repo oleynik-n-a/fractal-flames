@@ -6,15 +6,19 @@ import backend.academy.models.Pixel;
 
 public final class GammaCorrection implements Correction {
     private static final double GAMMA = 2.2;
-    private static final double MAX_COLOR_STRENGTH = 255.0;
 
     @Override
     public void process(FractalImage image) {
+        int maxHitCount = 0;
+        for (Pixel pixel : image.data()) {
+            maxHitCount = Math.max(maxHitCount, pixel.hitCount());
+        }
         for (int i = 0; i < image.data().length; ++i) {
             Pixel pixel = image.data()[i];
-            int r = (int)(MAX_COLOR_STRENGTH * Math.pow(pixel.color().r() / MAX_COLOR_STRENGTH, GAMMA));
-            int g = (int)(MAX_COLOR_STRENGTH * Math.pow(pixel.color().g() / MAX_COLOR_STRENGTH, GAMMA));
-            int b = (int)(MAX_COLOR_STRENGTH * Math.pow(pixel.color().b() / MAX_COLOR_STRENGTH, GAMMA));
+            double normalized = Math.log(1 + pixel.hitCount()) / (1 + maxHitCount);
+            int r = (int)(pixel.color().r() * Math.pow(normalized, 1 / GAMMA) % 256.0);
+            int g = (int)(pixel.color().g() * Math.pow(normalized, 1 / GAMMA) % 256.0);
+            int b = (int)(pixel.color().b() * Math.pow(normalized, 1 / GAMMA) % 256.0);
             image.data()[i] = new Pixel(new Color(r, g, b), pixel.hitCount());
         }
     }

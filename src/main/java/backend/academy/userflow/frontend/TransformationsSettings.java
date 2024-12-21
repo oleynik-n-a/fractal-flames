@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Getter
 public class TransformationsSettings extends BaseSettings {
-    @Getter private static final TransformationsSettings INSTANCE = new TransformationsSettings();
+    public static final TransformationsSettings INSTANCE = new TransformationsSettings();
 
     private final Map<Integer, TransformationType> transformationsBySettings = new LinkedHashMap<>() {{
         put(1, TransformationType.SINUSOIDAL);
@@ -25,7 +25,7 @@ public class TransformationsSettings extends BaseSettings {
         text.append("Choose transformations:").append(System.lineSeparator());
 
         int i = 1;
-        for (var transformation : Settings.INSTANCE().transformations().entrySet()) {
+        for (var transformation : Settings.INSTANCE.transformations().entrySet()) {
             text.append("  ").append(i).append(". ").append(transformation.getKey().toString())
                 .append(" transformation: ").append(transformation.getValue()).append(System.lineSeparator());
             ++i;
@@ -35,6 +35,6 @@ public class TransformationsSettings extends BaseSettings {
             .append(System.lineSeparator())
             .append("Input: ");
 
-        PrintHandler.INSTANCE().printMessage(text.toString());
+        PrintHandler.INSTANCE.printMessage(text.toString());
     }
 }

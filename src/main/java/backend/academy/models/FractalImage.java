@@ -17,10 +17,6 @@ public class FractalImage {
         }
     }
 
-    public boolean contains(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height;
-    }
-
     public void setWidth(int width) {
         this.width = width;
         this.data = new Pixel[width * height];
@@ -42,8 +38,8 @@ public class FractalImage {
     }
 
     public Pixel getPixel(Rect world, Point point) {
-        int x = (int)((point.x() - world.x()) / world.width() * width);
-        int y = (int)((point.y() - world.y()) / world.height() * height);
+        int x = (int) ((point.x() - world.x()) / world.width() * width);
+        int y = (int) ((point.y() - world.y()) / world.height() * height);
         return getPixel(x, y);
     }
 

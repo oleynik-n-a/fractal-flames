@@ -1,7 +1,6 @@
 package backend.academy.userflow.backend;
 
 import backend.academy.stream.handlers.InputHandler;
-import backend.academy.userflow.frontend.IterationsAmountSettings;
 import backend.academy.userflow.frontend.SamplesAmountSettings;
 import backend.academy.userflow.frontend.Settings;
 
@@ -15,14 +14,14 @@ public final class SetSamplesAmount extends SettingsBasedAction<SamplesAmountSet
         Integer input;
         while (true) {
             settings.print();
-            input = InputHandler.INSTANCE().tryReadInteger();
+            input = InputHandler.INSTANCE.tryReadInteger();
             if (input == null) {
                 settings.incorrectInput(true);
                 continue;
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE().samples(Settings.INSTANCE().BASE_SAMPLES_AMOUNT());
+                Settings.INSTANCE.samples(Settings.INSTANCE.BASE_SAMPLES_AMOUNT());
                 return;
             }
             if (input == 2) {
@@ -34,7 +33,7 @@ public final class SetSamplesAmount extends SettingsBasedAction<SamplesAmountSet
                 continue;
             }
             settings.incorrectInput(false);
-            Settings.INSTANCE().samples(input);
+            Settings.INSTANCE.samples(input);
         }
     }
 }

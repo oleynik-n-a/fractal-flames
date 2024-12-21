@@ -14,14 +14,14 @@ public final class SetIterationsAmount extends SettingsBasedAction<IterationsAmo
         Integer input;
         while (true) {
             settings.print();
-            input = InputHandler.INSTANCE().tryReadInteger();
+            input = InputHandler.INSTANCE.tryReadInteger();
             if (input == null) {
                 settings.incorrectInput(true);
                 continue;
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE().iterations(Settings.INSTANCE().BASE_ITERATIONS_AMOUNT());
+                Settings.INSTANCE.iterations(Settings.INSTANCE.BASE_ITERATIONS_AMOUNT());
                 return;
             }
             if (input == 2) {
@@ -33,7 +33,7 @@ public final class SetIterationsAmount extends SettingsBasedAction<IterationsAmo
                 continue;
             }
             settings.incorrectInput(false);
-            Settings.INSTANCE().iterations(input);
+            Settings.INSTANCE.iterations(input);
         }
     }
 }

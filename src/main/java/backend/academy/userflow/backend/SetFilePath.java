@@ -19,7 +19,7 @@ public final class SetFilePath extends SettingsBasedAction<FilePathSettings> {
         String input;
         while (true) {
             settings.print();
-            input = InputHandler.INSTANCE().readString();
+            input = InputHandler.INSTANCE.readString();
             if (input == null) {
                 settings.incorrectInput(true);
                 continue;
@@ -28,7 +28,7 @@ public final class SetFilePath extends SettingsBasedAction<FilePathSettings> {
                 settings.incorrectInput(false);
                 while (true) {
                     try {
-                        Settings.INSTANCE()
+                        Settings.INSTANCE
                             .path(Paths.get("results" + SEPARATOR + "Unnamed_" + file_number).toString());
                         break;
                     } catch (InvalidPathException e) {
@@ -42,7 +42,7 @@ public final class SetFilePath extends SettingsBasedAction<FilePathSettings> {
                 return;
             }
             try {
-                Settings.INSTANCE().path(Paths.get(input).toString());
+                Settings.INSTANCE.path(Paths.get(input).toString());
                 settings.incorrectInput(false);
             } catch (InvalidPathException e) {
                 settings.incorrectInput(true);

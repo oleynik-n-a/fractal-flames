@@ -5,14 +5,13 @@ import backend.academy.models.FractalImage;
 import backend.academy.models.Pixel;
 import backend.academy.models.Point;
 import backend.academy.models.Rect;
-import backend.academy.postprocess.Correction;
 import backend.academy.transformations.Transformation;
 import java.util.ArrayList;
 import java.util.Random;
 
 public final class SingleThreadRenderer extends Renderer {
-    public SingleThreadRenderer(ArrayList<Transformation> transformations, ArrayList<Correction> corrections) {
-        super(transformations, corrections);
+    public SingleThreadRenderer(ArrayList<Transformation> transformations, boolean useGammaCorrection) {
+        super(transformations, useGammaCorrection);
     }
 
     @Override
@@ -29,7 +28,7 @@ public final class SingleThreadRenderer extends Renderer {
         }
 
         Random random = new Random(seed);
-        Affine affine = new Affine();
+        Affine affine = affines.get(random.nextInt(affines.size()));
         for (int i = 0; i < samples; ++i) {
             Point point = Point.generateRandom(world);
             for (int j = -STEPS_FOR_NORMALIZATION; j < iterations; ++j) {

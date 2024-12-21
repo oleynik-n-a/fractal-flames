@@ -8,9 +8,4 @@ public final class Spherical implements Transformation {
         double squareSum = Math.pow(point.x(), 2) + Math.pow(point.y(), 2);
         return new Point(point.x() / squareSum, point.y() / squareSum);
     }
-
-    @Override
-    public TransformationType getType() {
-        return TransformationType.SPHERICAL;
-    }
 }

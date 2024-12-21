@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class ThreadsAmountSettings extends BaseSettings {
-    @Getter private static final ThreadsAmountSettings INSTANCE = new ThreadsAmountSettings();
+    public static final ThreadsAmountSettings INSTANCE = new ThreadsAmountSettings();
 
     private final int MIN_THREADS_AMOUNT = 1;
     private final int MAX_THREADS_AMOUNT = 100;
@@ -16,11 +16,11 @@ public class ThreadsAmountSettings extends BaseSettings {
         super.print();
         String text = "";
         text += "Input threads amount >= " + MIN_THREADS_AMOUNT + " && <= " + MAX_THREADS_AMOUNT + " (" +
-            Settings.INSTANCE().threads() + "):" + System.lineSeparator() +
+            Settings.INSTANCE.threads() + "):" + System.lineSeparator() +
             "  1. Default" + System.lineSeparator() +
             "  2. Back" + System.lineSeparator() +
             System.lineSeparator() +
             "Input: ";
-        PrintHandler.INSTANCE().printMessage(text);
+        PrintHandler.INSTANCE.printMessage(text);
     }
 }

@@ -13,7 +13,7 @@ public abstract class BaseSettings implements Printable {
 
     @Override
     public void print() {
-        PrintHandler.INSTANCE()
+        PrintHandler.INSTANCE
             .printMessage(incorrectInput ? "Incorrect input!" + System.lineSeparator() + System.lineSeparator() : "");
     }
 }
