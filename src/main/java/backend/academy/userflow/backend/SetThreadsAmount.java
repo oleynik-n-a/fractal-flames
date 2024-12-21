@@ -10,7 +10,7 @@ public final class SetThreadsAmount extends SettingsBasedAction<ThreadsAmountSet
     }
 
     @Override
-    @SuppressWarnings("returncount")
+    @SuppressWarnings({"returncount", "magicnumber"})
     public void act() {
         Integer input;
         while (true) {
