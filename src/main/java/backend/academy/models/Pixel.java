@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class Pixel {
     private Color color;
-    int hitCount;
+    private int hitCount;
 
     public Pixel(Color color, int hitCount) {
         this.color = color;

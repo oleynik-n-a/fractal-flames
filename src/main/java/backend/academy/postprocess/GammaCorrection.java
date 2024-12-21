@@ -6,19 +6,20 @@ import backend.academy.models.Pixel;
 
 public final class GammaCorrection implements Correction {
     private static final double GAMMA = 2.2;
+    private static final double MAX_BRIGHTNESS = 255.0;
 
     @Override
     public void process(FractalImage image) {
-        int maxHitCount = 0;
-        for (Pixel pixel : image.data()) {
-            maxHitCount = Math.max(maxHitCount, pixel.hitCount());
-        }
         for (int i = 0; i < image.data().length; ++i) {
             Pixel pixel = image.data()[i];
-            double normalized = Math.log(1 + pixel.hitCount()) / (1 + maxHitCount);
-            int r = (int) (pixel.color().r() * Math.pow(normalized, 1 / GAMMA));
-            int g = (int) (pixel.color().g() * Math.pow(normalized, 1 / GAMMA));
-            int b = (int) (pixel.color().b() * Math.pow(normalized, 1 / GAMMA));
+            double normalized = (double) pixel.hitCount() / Color.COLOR_SPECTRE;
+            double corrected = Math.log10(normalized * (Math.exp(GAMMA) - 1)) / GAMMA;
+            int r = (int) Math.max(0, Math.min(MAX_BRIGHTNESS,
+                (pixel.color().r() / (double) Color.COLOR_SPECTRE) * corrected * MAX_BRIGHTNESS));
+            int g = (int) Math.max(0, Math.min(MAX_BRIGHTNESS,
+                (pixel.color().g() / (double) Color.COLOR_SPECTRE) * corrected * MAX_BRIGHTNESS));
+            int b = (int) Math.max(0, Math.min(MAX_BRIGHTNESS,
+                (pixel.color().b() / (double) Color.COLOR_SPECTRE) * corrected * MAX_BRIGHTNESS));
             image.data()[i] = new Pixel(new Color(r, g, b), pixel.hitCount());
         }
     }

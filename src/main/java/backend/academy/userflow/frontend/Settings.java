@@ -67,8 +67,7 @@ public final class Settings extends BaseSettings {
             + "  7. Set affines amount (" + affines + ")" + System.lineSeparator()
             + "  8. Set image size (" + image.width() + "x" + image.height() + ")" + System.lineSeparator()
             + "  9. Set seed (" + seed + ")" + System.lineSeparator()
-            + "  10. " + (correction ? "Disable" : "Enable") + " gamma correction (" + correction + ")"
-            + System.lineSeparator()
+            + "  10. Enable gamma correction (" + correction + ")" + System.lineSeparator()
             + "  11. Choose transformations" + System.lineSeparator()
             + "  12. Exit" + System.lineSeparator()
             + System.lineSeparator()

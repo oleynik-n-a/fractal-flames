@@ -22,10 +22,15 @@ public final class SetThreadsAmount extends SettingsBasedAction<ThreadsAmountSet
             }
             if (input == 1) {
                 settings.incorrectInput(false);
-                Settings.INSTANCE.threads(Settings.INSTANCE.baseThreadsAmount());
+                Settings.INSTANCE.threads(1);
                 return;
             }
             if (input == 2) {
+                settings.incorrectInput(false);
+                Settings.INSTANCE.threads(Settings.INSTANCE.baseThreadsAmount());
+                return;
+            }
+            if (input == 3) {
                 settings.incorrectInput(false);
                 return;
             }

@@ -17,8 +17,9 @@ public final class ThreadsAmountSettings extends BaseSettings {
         String text = "";
         text += "Input threads amount >= " + minThreadsAmount + " && <= " + maxThreadsAmount + " ("
             + Settings.INSTANCE.threads() + "):" + System.lineSeparator()
-            + "  1. Default" + System.lineSeparator()
-            + "  2. Back" + System.lineSeparator()
+            + "  1. Single thread" + System.lineSeparator()
+            + "  2. Default" + System.lineSeparator()
+            + "  3. Back" + System.lineSeparator()
             + System.lineSeparator()
             + "Input: ";
         PrintHandler.INSTANCE.printMessage(text);

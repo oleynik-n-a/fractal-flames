@@ -28,10 +28,10 @@ public final class SingleThreadRenderer extends Renderer {
         }
 
         Random random = new Random(seed);
-        Affine affine = affines.get(random.nextInt(affines.size()));
         for (int i = 0; i < samples; ++i) {
             Point point = Point.generateRandom(world);
             for (int j = -STEPS_FOR_NORMALIZATION; j < iterations; ++j) {
+                Affine affine = affines.get(random.nextInt(affines.size()));
                 Transformation transform = transformations.get(random.nextInt(transformations.size()));
                 point = affine.apply(point);
                 point = transform.apply(point);
@@ -41,7 +41,6 @@ public final class SingleThreadRenderer extends Renderer {
                 }
 
                 Pixel pixel = canvas.getPixel(world, point);
-
                 if (pixel.hitCount() == 0) {
                     pixel.setColor(affine.color());
                 } else {

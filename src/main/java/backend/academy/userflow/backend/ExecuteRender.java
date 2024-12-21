@@ -19,13 +19,15 @@ import backend.academy.transformations.Transformation;
 import backend.academy.transformations.TransformationType;
 import backend.academy.userflow.frontend.Settings;
 import java.io.File;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import static backend.academy.save.ImageSaver.SEPARATOR;
 
 public final class ExecuteRender implements Action {
-    private static final double WORLD_SIZE_SIDE = 24.0;
+    private static final double WORLD_SIZE_SIDE = 12.0;
 
     private static final Map<TransformationType, Transformation> TRANSFORMATION_BY_TYPE = Map.of(
         TransformationType.SINUSOIDAL, new Sinusoidal(),
@@ -67,7 +69,9 @@ public final class ExecuteRender implements Action {
         }
 
         try {
-            PrintHandler.INSTANCE.printMessageLn("Rendering started on seed: " + Settings.INSTANCE.seed());
+            PrintHandler.INSTANCE.printMessageLn(
+                "Rendering started on seed: " + Settings.INSTANCE.seed() + System.lineSeparator());
+            Instant start = Instant.now();
 
             renderer.render(Settings.INSTANCE.image(), world, affines, Settings.INSTANCE.samples(),
                 Settings.INSTANCE.iterations(), Settings.INSTANCE.seed());
@@ -77,7 +81,12 @@ public final class ExecuteRender implements Action {
                 correction.process(Settings.INSTANCE.image());
             }
 
-            PrintHandler.INSTANCE.printMessageLn("Rendering finished");
+            PrintHandler.INSTANCE.printMessageLn("Rendering finished" + System.lineSeparator());
+            Instant end = Instant.now();
+
+            PrintHandler.INSTANCE.printMessageLn(
+                "Rendering time (in seconds): " + Duration.between(start, end).getSeconds() + System.lineSeparator());
+
             PrintHandler.INSTANCE.printMessageLn(
                 "Saving to: " + Settings.INSTANCE.path() + "." + Settings.INSTANCE.format());
 
@@ -85,7 +94,7 @@ public final class ExecuteRender implements Action {
                 new File("results" + SEPARATOR + Settings.INSTANCE.path() + "." + Settings.INSTANCE.format()),
                 Settings.INSTANCE.format());
 
-            PrintHandler.INSTANCE.printMessageLn("Saving finished");
+            PrintHandler.INSTANCE.printMessageLn("Saving finished" + System.lineSeparator());
         } catch (RenderException | SaveException e) {
             PrintHandler.INSTANCE.printMessageLn(e.getMessage());
         }
