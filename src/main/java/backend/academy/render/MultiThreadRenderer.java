@@ -4,11 +4,11 @@ import backend.academy.models.FractalImage;
 import backend.academy.models.Rect;
 import backend.academy.transformations.Transformation;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 public final class MultiThreadRenderer extends Renderer {
     private final int threadQuantity;
@@ -31,36 +31,25 @@ public final class MultiThreadRenderer extends Renderer {
         int iterPerSample,
         long seed
     ) {
-        try (ExecutorService service = Executors.newFixedThreadPool(threadQuantity)) {
-            Random random = new Random(seed);
-            ArrayList<Future<Boolean>> futures = new ArrayList<>();
-            int reminder = samples % threadQuantity;
-            for (int i = 0; i < threadQuantity; ++i) {
-                int finalReminder = reminder;
-                int threadSeed = random.nextInt();
-                SingleThreadRenderer singleRenderer = new SingleThreadRenderer(transformations, useGammaCorrection);
-                futures.add(service.submit(() -> {
-                    singleRenderer.render(
-                        canvas,
-                        world,
-                        affines,
-                        samples / threadQuantity + (finalReminder % 2),
-                        iterPerSample,
-                        threadSeed
-                    );
-                    return true;
-                }));
-                reminder -= 1;
-            }
-            try {
-                for (Future<Boolean> future : futures) {
-                    future.get();
-                }
-            } catch (InterruptedException | ExecutionException ignored) {
-            } finally {
-                service.shutdown();
-            }
-        } catch (IllegalArgumentException ignored) {
+        AtomicInteger reminder = new AtomicInteger(samples % threadQuantity);
+        List<CompletableFuture<Void>> futures = IntStream.range(0, threadQuantity).mapToObj(_ -> {
+            SingleThreadRenderer singleRenderer = new SingleThreadRenderer(transformations, useGammaCorrection);
+            return CompletableFuture.runAsync(() -> singleRenderer.render(
+                canvas,
+                world,
+                affines,
+                samples / threadQuantity + (reminder.getAndDecrement() > 0 ? 1 : 0),
+                iterPerSample,
+                seed
+            ));
+        }).toList();
+
+        CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+
+        try {
+            allOf.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Thread.currentThread().interrupt();
         }
     }
 }
