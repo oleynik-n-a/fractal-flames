@@ -23,6 +23,7 @@ public final class MultiThreadRenderer extends Renderer {
     }
 
     @Override
+    @SuppressWarnings({"illegalidentifiername", "lambdaparametername"})
     public void render(
         FractalImage canvas,
         Rect world,
