@@ -29,7 +29,7 @@ public final class SingleThreadRenderer extends Renderer {
 
         Random random = new Random(seed);
         for (int i = 0; i < samples; ++i) {
-            Point point = Point.generateRandom(world);
+            Point point = Point.generateRandom(world, seed);
             for (int j = -STEPS_FOR_NORMALIZATION; j < iterations; ++j) {
                 Affine affine = affines.get(random.nextInt(affines.size()));
                 Transformation transform = transformations.get(random.nextInt(transformations.size()));

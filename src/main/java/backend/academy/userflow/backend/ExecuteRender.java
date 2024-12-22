@@ -23,7 +23,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Random;
 import static backend.academy.save.ImageSaver.SEPARATOR;
 
 public final class ExecuteRender implements Action {
@@ -62,10 +61,9 @@ public final class ExecuteRender implements Action {
         double height = WORLD_SIZE_SIDE;
         Rect world = new Rect(-width / 2, -height / 2, width, height);
 
-        Random random = new Random(Settings.INSTANCE.seed());
         ArrayList<Affine> affines = new ArrayList<>(Settings.INSTANCE.affines());
         for (int i = 0; i < Settings.INSTANCE.affines(); ++i) {
-            affines.add(new Affine(random));
+            affines.add(new Affine(Settings.INSTANCE.seed()));
         }
 
         try {

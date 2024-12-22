@@ -15,7 +15,8 @@ public final class Affine implements Function<Point, Point> {
     private double e;
     private double f;
 
-    public Affine(Random random) {
+    public Affine(long seed) {
+        Random random = new Random(seed);
         color = new Color(random.nextInt(Color.COLOR_SPECTRE), random.nextInt(Color.COLOR_SPECTRE),
             random.nextInt(Color.COLOR_SPECTRE));
         do {
